@@ -38,7 +38,6 @@ import java.util.stream.Collectors;
  * 帖子服务实现
  *
  * @author xudongxu
- * 
  */
 @Service
 @Slf4j

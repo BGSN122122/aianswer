@@ -13,7 +13,6 @@ import javax.servlet.http.HttpServletRequest;
  * 用户答题记录服务
  *
  * @author xudongxu
- *
  */
 public interface UserAnswerService extends IService<UserAnswer> {
 
@@ -21,7 +20,7 @@ public interface UserAnswerService extends IService<UserAnswer> {
      * 校验数据
      *
      * @param userAnswer
-     * @param add 对创建的数据进行校验
+     * @param add        对创建的数据进行校验
      */
     void validUserAnswer(UserAnswer userAnswer, boolean add);
 
@@ -32,7 +31,7 @@ public interface UserAnswerService extends IService<UserAnswer> {
      * @return
      */
     QueryWrapper<UserAnswer> getQueryWrapper(UserAnswerQueryRequest userAnswerQueryRequest);
-    
+
     /**
      * 获取用户答题记录封装
      *

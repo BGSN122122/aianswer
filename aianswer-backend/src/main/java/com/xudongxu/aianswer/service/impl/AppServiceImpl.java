@@ -35,7 +35,6 @@ import java.util.stream.Collectors;
  * 应用服务实现
  *
  * @author xudongxu
- *
  */
 @Service
 @Slf4j
@@ -48,7 +47,7 @@ public class AppServiceImpl extends ServiceImpl<AppMapper, App> implements AppSe
      * 校验数据
      *
      * @param app
-     * @param add      对创建的数据进行校验
+     * @param add 对创建的数据进行校验
      */
     @Override
     public void validApp(App app, boolean add) {
@@ -62,16 +61,15 @@ public class AppServiceImpl extends ServiceImpl<AppMapper, App> implements AppSe
         Integer reviewStatus = app.getReviewStatus();
 
 
-
         // 创建数据时，参数不能为空
         if (add) {
             // 补充校验规则
-            ThrowUtils.throwIf(StringUtils.isBlank(appName), ErrorCode.PARAMS_ERROR,"应用名称不能为空");
-            ThrowUtils.throwIf(StringUtils.isBlank(appDesc), ErrorCode.PARAMS_ERROR,"应用描述不能为空");
+            ThrowUtils.throwIf(StringUtils.isBlank(appName), ErrorCode.PARAMS_ERROR, "应用名称不能为空");
+            ThrowUtils.throwIf(StringUtils.isBlank(appDesc), ErrorCode.PARAMS_ERROR, "应用描述不能为空");
             AppTypeEnum enumByValue = AppTypeEnum.getEnumByValue(appType);
-            ThrowUtils.throwIf(ObjectUtils.isEmpty(enumByValue), ErrorCode.PARAMS_ERROR,"应用类型非法");
+            ThrowUtils.throwIf(ObjectUtils.isEmpty(enumByValue), ErrorCode.PARAMS_ERROR, "应用类型非法");
             AppScoringStrategyEnum appScoringStrategyEnum = AppScoringStrategyEnum.getEnumByValue(scoringStrategy);
-            ThrowUtils.throwIf(ObjectUtils.isEmpty(appScoringStrategyEnum), ErrorCode.PARAMS_ERROR,"评分策略非法");
+            ThrowUtils.throwIf(ObjectUtils.isEmpty(appScoringStrategyEnum), ErrorCode.PARAMS_ERROR, "评分策略非法");
         }
         // 修改数据时，有参数则校验
         // 补充校验规则

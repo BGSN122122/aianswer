@@ -1,16 +1,16 @@
 package com.xudongxu.aianswer.model.dto.post;
 
 import com.xudongxu.aianswer.common.PageRequest;
-import java.io.Serializable;
-import java.util.List;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+
+import java.io.Serializable;
+import java.util.List;
 
 /**
  * 查询请求
  *
  * @author xudongxu
- * 
  */
 @EqualsAndHashCode(callSuper = true)
 @Data

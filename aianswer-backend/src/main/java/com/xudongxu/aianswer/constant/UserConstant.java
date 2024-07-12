@@ -4,7 +4,6 @@ package com.xudongxu.aianswer.constant;
  * 用户常量
  *
  * @author xudongxu
- * 
  */
 public interface UserConstant {
 

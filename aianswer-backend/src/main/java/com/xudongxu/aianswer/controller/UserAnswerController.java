@@ -19,6 +19,7 @@ import com.xudongxu.aianswer.model.entity.User;
 import com.xudongxu.aianswer.model.entity.UserAnswer;
 import com.xudongxu.aianswer.model.enums.ReviewStatusEnum;
 import com.xudongxu.aianswer.model.vo.UserAnswerVO;
+import com.xudongxu.aianswer.scoring.ScoringStrategyExecutor;
 import com.xudongxu.aianswer.service.AppService;
 import com.xudongxu.aianswer.service.UserAnswerService;
 import com.xudongxu.aianswer.service.UserService;
@@ -28,12 +29,12 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 
 /**
  * 用户答题记录接口
  *
  * @author xudongxu
- *
  */
 @RestController
 @RequestMapping("/userAnswer")
@@ -49,8 +50,10 @@ public class UserAnswerController {
     @Resource
     private AppService appService;
 
-//    @Resource
-//    private ScoringStrategyExecutor scoringStrategyExecutor;
+    @Resource
+    private ScoringStrategyExecutor scoringStrategyExecutor;
+
+
     // region 增删改查
 
     /**
@@ -67,6 +70,7 @@ public class UserAnswerController {
         UserAnswer userAnswer = new UserAnswer();
         BeanUtils.copyProperties(userAnswerAddRequest, userAnswer);
         userAnswer.setChoices(JSONUtil.toJsonStr(userAnswerAddRequest.getChoices()));
+
         // 数据校验
         userAnswerService.validUserAnswer(userAnswer, true);
         // 判断 app 是否存在
@@ -85,14 +89,15 @@ public class UserAnswerController {
         // 返回新写入的数据 id
         long newUserAnswerId = userAnswer.getId();
         // 调用评分模块
-    /*    try {
+        List<String> choices = userAnswerAddRequest.getChoices();
+        try {
             UserAnswer userAnswerWithResult = scoringStrategyExecutor.doScore(choices, app);
             userAnswerWithResult.setId(newUserAnswerId);
             userAnswerService.updateById(userAnswerWithResult);
         } catch (Exception e) {
             e.printStackTrace();
             throw new BusinessException(ErrorCode.OPERATION_ERROR, "评分错误");
-        }*/
+        }
         return ResultUtils.success(newUserAnswerId);
     }
 
@@ -193,7 +198,7 @@ public class UserAnswerController {
      */
     @PostMapping("/list/page/vo")
     public BaseResponse<Page<UserAnswerVO>> listUserAnswerVOByPage(@RequestBody UserAnswerQueryRequest userAnswerQueryRequest,
-                                                               HttpServletRequest request) {
+                                                                   HttpServletRequest request) {
         long current = userAnswerQueryRequest.getCurrent();
         long size = userAnswerQueryRequest.getPageSize();
         // 限制爬虫
@@ -214,7 +219,7 @@ public class UserAnswerController {
      */
     @PostMapping("/my/list/page/vo")
     public BaseResponse<Page<UserAnswerVO>> listMyUserAnswerVOByPage(@RequestBody UserAnswerQueryRequest userAnswerQueryRequest,
-                                                                 HttpServletRequest request) {
+                                                                     HttpServletRequest request) {
         ThrowUtils.throwIf(userAnswerQueryRequest == null, ErrorCode.PARAMS_ERROR);
         // 补充查询条件，只查询当前登录用户的数据
         User loginUser = userService.getLoginUser(request);

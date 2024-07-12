@@ -10,7 +10,6 @@ import java.io.Serializable;
  * 查询评分结果请求
  *
  * @author xudongxu
- *
  */
 @EqualsAndHashCode(callSuper = true)
 @Data

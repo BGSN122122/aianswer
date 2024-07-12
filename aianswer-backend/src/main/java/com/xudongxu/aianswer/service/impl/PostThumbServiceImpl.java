@@ -10,16 +10,16 @@ import com.xudongxu.aianswer.model.entity.PostThumb;
 import com.xudongxu.aianswer.model.entity.User;
 import com.xudongxu.aianswer.service.PostService;
 import com.xudongxu.aianswer.service.PostThumbService;
-import javax.annotation.Resource;
 import org.springframework.aop.framework.AopContext;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import javax.annotation.Resource;
 
 /**
  * 帖子点赞服务实现
  *
  * @author xudongxu
- * 
  */
 @Service
 public class PostThumbServiceImpl extends ServiceImpl<PostThumbMapper, PostThumb>

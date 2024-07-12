@@ -1,13 +1,13 @@
 package com.xudongxu.aianswer.model.dto.postfavour;
 
 import java.io.Serializable;
+
 import lombok.Data;
 
 /**
  * 帖子收藏 / 取消收藏请求
  *
  * @author xudongxu
- * 
  */
 @Data
 public class PostFavourAddRequest implements Serializable {

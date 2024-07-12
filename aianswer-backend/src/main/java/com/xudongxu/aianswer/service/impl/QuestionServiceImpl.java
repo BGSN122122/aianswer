@@ -34,7 +34,6 @@ import java.util.stream.Collectors;
  * 问题服务实现
  *
  * @author xudongxu
- *
  */
 @Service
 @Slf4j
@@ -61,7 +60,7 @@ public class QuestionServiceImpl extends ServiceImpl<QuestionMapper, Question> i
         // 创建数据时，参数不能为空
         if (add) {
             // 补充校验规则
-            ThrowUtils.throwIf(StringUtils.isBlank(questionContent), ErrorCode.PARAMS_ERROR,"题目内容不能为空");
+            ThrowUtils.throwIf(StringUtils.isBlank(questionContent), ErrorCode.PARAMS_ERROR, "题目内容不能为空");
             ThrowUtils.throwIf(appId == null || appId <= 0, ErrorCode.PARAMS_ERROR, "appId 非法");
 
         }

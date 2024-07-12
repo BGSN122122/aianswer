@@ -9,7 +9,6 @@ import java.util.List;
  * 更新问题请求
  *
  * @author xudongxu
- *
  */
 @Data
 public class QuestionUpdateRequest implements Serializable {

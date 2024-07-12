@@ -6,13 +6,13 @@ import com.baomidou.mybatisplus.extension.service.IService;
 import com.xudongxu.aianswer.model.dto.post.PostQueryRequest;
 import com.xudongxu.aianswer.model.entity.Post;
 import com.xudongxu.aianswer.model.vo.PostVO;
+
 import javax.servlet.http.HttpServletRequest;
 
 /**
  * 帖子服务
  *
  * @author xudongxu
- * 
  */
 public interface PostService extends IService<Post> {
 

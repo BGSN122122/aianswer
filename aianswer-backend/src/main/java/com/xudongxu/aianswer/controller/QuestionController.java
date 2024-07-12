@@ -30,7 +30,6 @@ import javax.servlet.http.HttpServletRequest;
  * 问题接口
  *
  * @author xudongxu
- *
  */
 @RestController
 @RequestMapping("/question")

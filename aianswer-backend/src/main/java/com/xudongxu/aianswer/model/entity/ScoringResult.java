@@ -8,9 +8,10 @@ import java.util.Date;
 
 /**
  * 评分结果
+ *
  * @TableName scoring_result
  */
-@TableName(value ="scoring_result")
+@TableName(value = "scoring_result")
 @Data
 public class ScoringResult implements Serializable {
     /**

@@ -31,7 +31,6 @@ import static com.xudongxu.aianswer.constant.UserConstant.USER_LOGIN_STATE;
  * 用户服务实现
  *
  * @author xudongxu
- * 
  */
 @Service
 @Slf4j

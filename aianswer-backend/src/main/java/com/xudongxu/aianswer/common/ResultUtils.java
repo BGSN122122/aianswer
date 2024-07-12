@@ -4,7 +4,6 @@ package com.xudongxu.aianswer.common;
  * 返回工具类
  *
  * @author xudongxu
- * 
  */
 public class ResultUtils {
 

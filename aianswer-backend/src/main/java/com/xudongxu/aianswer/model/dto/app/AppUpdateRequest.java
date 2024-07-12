@@ -11,7 +11,6 @@ import java.util.Date;
  * 更新应用请求
  *
  * @author xudongxu
- *
  */
 @Data
 public class AppUpdateRequest implements Serializable {
@@ -65,7 +64,6 @@ public class AppUpdateRequest implements Serializable {
      * 审核时间
      */
     private Date reviewTime;
-
 
 
     private static final long serialVersionUID = 1L;

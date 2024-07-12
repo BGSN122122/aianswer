@@ -14,7 +14,6 @@ import org.springframework.context.annotation.Configuration;
  * 腾讯云对象存储客户端
  *
  * @author xudongxu
- * 
  */
 @Configuration
 @ConfigurationProperties(prefix = "cos.client")

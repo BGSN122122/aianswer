@@ -2,7 +2,9 @@ package com.xudongxu.aianswer.model.dto.postfavour;
 
 import com.xudongxu.aianswer.common.PageRequest;
 import com.xudongxu.aianswer.model.dto.post.PostQueryRequest;
+
 import java.io.Serializable;
+
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -10,7 +12,6 @@ import lombok.EqualsAndHashCode;
  * 帖子收藏查询请求
  *
  * @author xudongxu
- * 
  */
 @Data
 @EqualsAndHashCode(callSuper = true)

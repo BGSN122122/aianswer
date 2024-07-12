@@ -4,7 +4,6 @@ package com.xudongxu.aianswer.constant;
  * 通用常量
  *
  * @author xudongxu
- * 
  */
 public interface CommonConstant {
 
@@ -17,5 +16,5 @@ public interface CommonConstant {
      * 降序
      */
     String SORT_ORDER_DESC = " descend";
-    
+
 }

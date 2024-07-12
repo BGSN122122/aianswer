@@ -13,7 +13,6 @@ import java.util.List;
  * 评分结果视图
  *
  * @author xudongxu
- *
  */
 @Data
 public class ScoringResultVO implements Serializable {
@@ -85,7 +84,7 @@ public class ScoringResultVO implements Serializable {
         }
         ScoringResult scoringResult = new ScoringResult();
         BeanUtils.copyProperties(scoringResultVO, scoringResult);
-       scoringResult.setResultProp(JSONUtil.toJsonStr(scoringResultVO.getResultProp()));
+        scoringResult.setResultProp(JSONUtil.toJsonStr(scoringResultVO.getResultProp()));
         return scoringResult;
     }
 

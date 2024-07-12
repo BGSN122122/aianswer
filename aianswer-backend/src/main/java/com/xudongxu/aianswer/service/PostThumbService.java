@@ -1,14 +1,13 @@
 package com.xudongxu.aianswer.service;
 
-import com.xudongxu.aianswer.model.entity.PostThumb;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.xudongxu.aianswer.model.entity.PostThumb;
 import com.xudongxu.aianswer.model.entity.User;
 
 /**
  * 帖子点赞服务
  *
  * @author xudongxu
- * 
  */
 public interface PostThumbService extends IService<PostThumb> {
 

@@ -4,7 +4,6 @@ package com.xudongxu.aianswer.common;
  * 自定义错误码
  *
  * @author xudongxu
- * 
  */
 public enum ErrorCode {
 

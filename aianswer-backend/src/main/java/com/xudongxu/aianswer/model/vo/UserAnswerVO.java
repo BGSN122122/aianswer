@@ -13,7 +13,6 @@ import java.util.List;
  * 用户答题记录视图
  *
  * @author xudongxu
- *
  */
 @Data
 public class UserAnswerVO implements Serializable {
@@ -116,7 +115,7 @@ public class UserAnswerVO implements Serializable {
         }
         UserAnswerVO userAnswerVO = new UserAnswerVO();
         BeanUtils.copyProperties(userAnswer, userAnswerVO);
-        userAnswerVO.setChoices(JSONUtil.toList(userAnswer.getChoices(),String.class));
+        userAnswerVO.setChoices(JSONUtil.toList(userAnswer.getChoices(), String.class));
         return userAnswerVO;
     }
 }

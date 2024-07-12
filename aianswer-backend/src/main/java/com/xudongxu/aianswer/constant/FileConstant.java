@@ -4,7 +4,6 @@ package com.xudongxu.aianswer.constant;
  * 文件常量
  *
  * @author xudongxu
- * 
  */
 public interface FileConstant {
 

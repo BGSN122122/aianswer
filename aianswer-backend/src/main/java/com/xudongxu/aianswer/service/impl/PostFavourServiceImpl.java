@@ -13,16 +13,16 @@ import com.xudongxu.aianswer.model.entity.PostFavour;
 import com.xudongxu.aianswer.model.entity.User;
 import com.xudongxu.aianswer.service.PostFavourService;
 import com.xudongxu.aianswer.service.PostService;
-import javax.annotation.Resource;
 import org.springframework.aop.framework.AopContext;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import javax.annotation.Resource;
 
 /**
  * 帖子收藏服务实现
  *
  * @author xudongxu
- * 
  */
 @Service
 public class PostFavourServiceImpl extends ServiceImpl<PostFavourMapper, PostFavour>

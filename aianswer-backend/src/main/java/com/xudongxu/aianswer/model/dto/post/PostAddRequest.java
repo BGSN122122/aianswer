@@ -1,14 +1,14 @@
 package com.xudongxu.aianswer.model.dto.post;
 
+import lombok.Data;
+
 import java.io.Serializable;
 import java.util.List;
-import lombok.Data;
 
 /**
  * 创建请求
  *
  * @author xudongxu
- * 
  */
 @Data
 public class PostAddRequest implements Serializable {

@@ -6,7 +6,6 @@ import com.xudongxu.aianswer.common.ErrorCode;
  * 抛异常工具类
  *
  * @author xudongxu
- * 
  */
 public class ThrowUtils {
 

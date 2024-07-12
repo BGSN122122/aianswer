@@ -1,13 +1,13 @@
 package com.xudongxu.aianswer.common;
 
-import java.io.Serializable;
 import lombok.Data;
+
+import java.io.Serializable;
 
 /**
  * 删除请求
  *
  * @author xudongxu
- * 
  */
 @Data
 public class DeleteRequest implements Serializable {

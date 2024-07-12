@@ -14,7 +14,6 @@ import java.util.List;
  * 问题视图
  *
  * @author xudongxu
- *
  */
 @Data
 public class QuestionVO implements Serializable {

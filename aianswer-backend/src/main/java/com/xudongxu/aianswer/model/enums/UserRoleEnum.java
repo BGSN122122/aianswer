@@ -3,13 +3,13 @@ package com.xudongxu.aianswer.model.enums;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
+
 import org.apache.commons.lang3.ObjectUtils;
 
 /**
  * 用户角色枚举
  *
  * @author xudongxu
- * 
  */
 public enum UserRoleEnum {
 
