@@ -1,6 +1,7 @@
 package com.xudongxu.aianswer.manager;
 
 import javax.annotation.Resource;
+
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
@@ -8,7 +9,6 @@ import org.springframework.boot.test.context.SpringBootTest;
  * Cos 操作测试
  *
  * @author xudongxu
- * 
  */
 @SpringBootTest
 class CosManagerTest {
