@@ -22,7 +22,12 @@
       </a-menu>
     </a-col>
     <a-col flex="100px">
-      <a-button type="primary" href="/user/login">登录</a-button>
+      <div v-if="loginUserStore.loginUser.id">
+        {{ loginUserStore.loginUser.userName ?? "无名" }}
+      </div>
+      <div v-else>
+        <a-button type="primary" href="/user/login">登录</a-button>
+      </div>
     </a-col>
   </a-row>
 </template>
@@ -30,17 +35,28 @@
 <script setup lang="ts">
 import { routes } from "@/router/routes";
 import { useRouter } from "vue-router";
-import { ref } from "vue";
+import { computed, ref } from "vue";
+import { useLoginUserStore } from "@/store/userStore";
+import checkAccess from "@/access/checkAccess";
+
+const loginUserStore = useLoginUserStore();
 
 const router = useRouter();
 const doMenuClick = (key: string) => router.push(key);
 const selectedKeys = ref(["/"]);
 router.afterEach((to) => (selectedKeys.value = [to.path]));
-const visibleRoutes = routes.filter((item) => {
-  if (item.meta?.hideInMenu) {
-    return false;
-  }
-  return true;
+// 展示在菜单栏的路由数组
+const visibleRoutes = computed(() => {
+  return routes.filter((item) => {
+    if (item.meta?.hideInMenu) {
+      return false;
+    }
+    // 根据权限过滤菜单
+    if (!checkAccess(loginUserStore.loginUser, item.meta?.access as string)) {
+      return false;
+    }
+    return true;
+  });
 });
 </script>
 

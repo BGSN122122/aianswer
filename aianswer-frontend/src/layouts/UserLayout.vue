@@ -11,9 +11,9 @@
         <router-view />
       </a-layout-content>
       <a-layout-footer class="footer">
-        <a href="https://www.code-nav.cn" target="_blank">
-          编程导航 by 程序员鱼皮
-        </a>
+        <div class="footer-content">
+          <p>&copy; 2024 My Website. All rights reserved.</p>
+        </div>
       </a-layout-footer>
     </a-layout>
   </div>
@@ -34,8 +34,8 @@
 }
 
 #userLayout .header {
-  margin-top: 16px;
-  font-size: 21px;
+  margin-top: 296px;
+  font-size: 25px;
 }
 
 #userLayout .content {
