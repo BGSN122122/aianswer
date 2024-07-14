@@ -4,7 +4,9 @@
       <a-layout-header class="header">
         <GlobalHeader />
       </a-layout-header>
-      <a-layout-content class="content">Content</a-layout-content>
+      <a-layout-content class="content">
+        <router-view />
+      </a-layout-content>
       <a-layout-footer class="footer">
         <div class="footer-content">
           <p>&copy; 2024 My Website. All rights reserved.</p>
@@ -25,13 +27,13 @@ export default defineComponent({
 
 <style>
 #basicLayout .footer {
-  background: #efefef;
-  padding: 16px;
   position: fixed;
+  right: 0;
   bottom: 0;
   left: 0;
-  right: 0;
+  padding: 16px;
   text-align: center;
+  background: #efefef;
 }
 
 .footer-content {
