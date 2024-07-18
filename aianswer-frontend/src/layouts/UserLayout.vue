@@ -34,7 +34,7 @@
 }
 
 #userLayout .header {
-  margin-top: 296px;
+  margin-top: 25vh;
   font-size: 25px;
 }
 

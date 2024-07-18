@@ -82,21 +82,5 @@ const handleSubmit = async () => {
 #userRegisterPage {
   width: 480px;
   margin: 0 auto;
-  margin-top: 70px;
-}
-
-.form {
-  width: 100%;
-  max-width: 480px;
-  margin: 0 auto;
-  font-size: 16px;
-}
-
-.form-item {
-  margin-top: 20px;
-}
-
-.form-input {
-  margin-top: 20px;
 }
 </style>
