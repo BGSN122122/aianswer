@@ -16,30 +16,19 @@
   </div>
 </template>
 
-<script>
-import { defineComponent } from "vue";
+<script setup lang="ts">
 import GlobalHeader from "@/components/GlobalHeader.vue";
-
-export default defineComponent({
-  components: { GlobalHeader },
-});
 </script>
 
-<style>
-#basicLayout .footer {
-  position: fixed;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  padding: 16px;
-  text-align: center;
-  background: #efefef;
+<style scoped>
+#basicLayout {
 }
 
-.footer-content {
-  max-width: 1200px;
-  margin: 0 auto;
+#basicLayout .header {
+  margin-bottom: 16px;
+  box-shadow: #eee 1px 1px 5px;
 }
+
 #basicLayout .content {
   box-sizing: border-box;
   width: 100%;
@@ -47,5 +36,11 @@ export default defineComponent({
   margin: 0 auto 28px;
   padding: 20px;
   background: linear-gradient(to right, #fefefe, #fff);
+}
+
+.footer {
+  padding: 16px;
+  text-align: center;
+  background: #efefef;
 }
 </style>

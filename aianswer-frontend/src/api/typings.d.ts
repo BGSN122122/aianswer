@@ -1,4 +1,10 @@
 declare namespace API {
+  type AiGenerateQuestionRequest = {
+    appId?: number;
+    optionNumber?: number;
+    questionNumber?: number;
+  };
+
   type App = {
     appDesc?: string;
     appIcon?: string;
@@ -49,7 +55,6 @@ declare namespace API {
     searchText?: string;
     sortField?: string;
     sortOrder?: string;
-    title?: string;
     userId?: number;
   };
 
@@ -98,6 +103,12 @@ declare namespace API {
   type BaseResponseInt_ = {
     code?: number;
     data?: number;
+    message?: string;
+  };
+
+  type BaseResponseListQuestionContentDTO_ = {
+    code?: number;
+    data?: QuestionContentDTO[];
     message?: string;
   };
 
@@ -546,7 +557,6 @@ declare namespace API {
   };
 
   type QuestionEditRequest = {
-    appId?: number;
     id?: number;
     questionContent?: QuestionContentDTO[];
   };
@@ -558,14 +568,12 @@ declare namespace API {
     notId?: number;
     pageSize?: number;
     questionContent?: string;
-    searchText?: string;
     sortField?: string;
     sortOrder?: string;
     userId?: number;
   };
 
   type QuestionUpdateRequest = {
-    appId?: number;
     id?: number;
     questionContent?: QuestionContentDTO[];
   };
