@@ -1,5 +1,6 @@
 package com.xudongxu.aianswer.controller;
 
+import cn.hutool.core.util.StrUtil;
 import cn.hutool.json.JSONUtil;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.xudongxu.aianswer.annotation.AuthCheck;
@@ -20,13 +21,19 @@ import com.xudongxu.aianswer.model.vo.QuestionVO;
 import com.xudongxu.aianswer.service.AppService;
 import com.xudongxu.aianswer.service.QuestionService;
 import com.xudongxu.aianswer.service.UserService;
+import com.zhipu.oapi.service.v4.model.ModelData;
+import io.reactivex.Flowable;
+import io.reactivex.schedulers.Schedulers;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * 问题接口
@@ -244,7 +251,7 @@ public class QuestionController {
 
     // endregion
 
-    //region
+    // region
     /**
      * Ai工具
      */
@@ -261,7 +268,7 @@ public class QuestionController {
             "```\n" +
             "\n" +
             "请你根据上述信息，按照以下步骤来出题：\n" +
-            "1. 要求：题目和选项尽可能地短，题目不要包含序号，每题的选项数以我提供的为主，题目不能重复\n" +
+            "1. 要求：要生成的题目数严格按照我给的，题目和选项尽可能地短，题目不要包含序号，每个题目的选项数严格按照我给的，题目不能重复,题目数和选项数严格按照我给的生成，不要多生成\n" +
             "2. 严格按照下面的 json 格式输出题目和选项\n" +
             "```\n" +
             "[{\"options\":[{\"value\":\"选项内容\",\"key\":\"A\"},{\"value\":\"\",\"key\":\"B\"}],\"title\":\"题目标题\"}]\n" +
@@ -302,5 +309,64 @@ public class QuestionController {
         List<QuestionContentDTO> questionContentDTOList = JSONUtil.toList(json, QuestionContentDTO.class);
         return ResultUtils.success(questionContentDTOList);
     }
-    //endregion
+
+    @GetMapping("/ai_generate/sse")
+    public SseEmitter aiGenerateQuestionSse(
+            AiGenerateQuestionRequest aiGenerateQuestionRequest) {
+        ThrowUtils.throwIf(aiGenerateQuestionRequest == null, ErrorCode.PARAMS_ERROR);
+        // 获取参数
+        Long appId = aiGenerateQuestionRequest.getAppId();
+        int questionNumber = aiGenerateQuestionRequest.getQuestionNumber();
+        int optionNumber = aiGenerateQuestionRequest.getOptionNumber();
+        // 获取应用信息
+        App app = appService.getById(appId);
+        ThrowUtils.throwIf(app == null, ErrorCode.NOT_FOUND_ERROR);
+        // 封装 Prompt
+        String userMessage = getGenerateQuestionUserMessage(app, questionNumber, optionNumber);
+        // 建立SSE连接
+        SseEmitter sseEmitter = new SseEmitter();
+        // AI 生成
+        Flowable<ModelData> modelDataFlowable = aiManager.doStreamStableRequest(GENERATE_QUESTION_SYSTEM_MESSAGE, userMessage);
+        // 截取需要的 JSON 信息
+        // 左括号计数器，除了默认值外，当回归为 0 时，表示左括号等于右括号，可以截取
+        AtomicInteger counter = new AtomicInteger(0);
+        // 拼接完整题目
+        StringBuilder stringBuilder = new StringBuilder();
+        modelDataFlowable
+                .observeOn(Schedulers.io())
+                .map(modelData -> modelData.getChoices().get(0).getDelta().getContent())
+                .map(message -> message.replaceAll("\\s", ""))
+                .filter(StrUtil::isNotBlank)
+                .flatMap(message -> {
+                    List<Character> characterList = new ArrayList<>();
+                    for (char c : message.toCharArray()) {
+                        characterList.add(c);
+                    }
+                    return Flowable.fromIterable(characterList);
+                })
+                .doOnNext(c -> {
+                    // 如果是 '{'，计数器 + 1
+                    if (c == '{') {
+                        counter.addAndGet(1);
+                    }
+                    if (counter.get() > 0) {
+                        stringBuilder.append(c);
+                    }
+                    if (c == '}') {
+                        counter.addAndGet(-1);
+                        if (counter.get() == 0) {
+                            // 可以拼接题目，并且通过 SSE 返回给前端
+                            sseEmitter.send(JSONUtil.toJsonStr(stringBuilder.toString()));
+                            // 重置，准备拼接下一道题
+                            stringBuilder.setLength(0);
+                        }
+                    }
+                })
+                .doOnError((e) -> log.error("sse error", e))
+                .doOnComplete(sseEmitter::complete)
+                .subscribe();
+        return sseEmitter;
+
+    }
+    // endregion
 }

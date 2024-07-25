@@ -5,10 +5,8 @@ import com.xudongxu.aianswer.common.ErrorCode;
 import com.xudongxu.aianswer.exception.BusinessException;
 import com.zhipu.oapi.ClientV4;
 import com.zhipu.oapi.Constants;
-import com.zhipu.oapi.service.v4.model.ChatCompletionRequest;
-import com.zhipu.oapi.service.v4.model.ChatMessage;
-import com.zhipu.oapi.service.v4.model.ChatMessageRole;
-import com.zhipu.oapi.service.v4.model.ModelApiResponse;
+import com.zhipu.oapi.service.v4.model.*;
+import io.reactivex.Flowable;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
@@ -27,7 +25,7 @@ public class AiManager {
     private static final Float STABLE_TEMPERATURE = 0.05f;
     private static final Float UNSTABLE_TEMPERATURE = 0.99f;
     /**
-     * 同步回答
+     * 同步回答（不稳定）
      *
      * @param userMessage
      * @param sysMessage
@@ -38,7 +36,18 @@ public class AiManager {
     }
 
     /**
-     * 同步回答
+     * 流式回答(不稳定)
+     *
+     * @param userMessage
+     * @param sysMessage
+     * @return
+     */
+    public Flowable<ModelData> doStreamUnStableRequest(String userMessage, String sysMessage) {
+        return doStreamRequest(userMessage, sysMessage,  UNSTABLE_TEMPERATURE);
+    }
+
+    /**
+     * 同步回答（稳定）
      *
      * @param userMessage
      * @param sysMessage
@@ -49,6 +58,18 @@ public class AiManager {
     }
 
     /**
+     * 流式回答（稳定）
+     *
+     * @param userMessage
+     * @param sysMessage
+     * @return
+     */
+    public Flowable<ModelData> doStreamStableRequest(String userMessage, String sysMessage) {
+        return doStreamRequest(userMessage, sysMessage,  STABLE_TEMPERATURE);
+    }
+
+
+    /**
      * 通用回答(系统用户)
      *
      * @param userMessage
@@ -57,12 +78,29 @@ public class AiManager {
      * @return
      */
     private String doRequest(String userMessage, String sysMessage, Boolean stream, Float temperature) {
+        List<ChatMessage> messages = buildMessage(userMessage, sysMessage);
+        return doRequest(messages, stream, temperature);
+    }
+    /**
+     * 通用回答(系统用户，流式)
+     *
+     * @param userMessage
+     * @param sysMessage
+     * @param temperature
+     * @return
+     */
+    private Flowable<ModelData> doStreamRequest(String userMessage, String sysMessage, Float temperature) {
+        List<ChatMessage> messages = buildMessage(userMessage, sysMessage);
+        return doStreamRequest(messages, temperature);
+    }
+
+    private List<ChatMessage> buildMessage(String userMessage, String sysMessage) {
         List<ChatMessage> messages = new ArrayList<>();
         ChatMessage sysChatMessage = new ChatMessage(ChatMessageRole.USER.value(), sysMessage);
         messages.add(sysChatMessage);
         ChatMessage userChatMessage = new ChatMessage(ChatMessageRole.USER.value(), userMessage);
         messages.add(userChatMessage);
-        return doRequest(messages, stream, temperature);
+        return messages;
     }
 
     /**
@@ -84,6 +122,29 @@ public class AiManager {
         try {
             ModelApiResponse invokeModelApiResp = clientV4.invokeModelApi(chatCompletionRequest);
             return invokeModelApiResp.getData().getChoices().get(0).toString();
+        }catch (Exception e){
+            e.printStackTrace();
+            throw new BusinessException(ErrorCode.SYSTEM_ERROR,e.getMessage());
+        }
+    }
+    /**
+     * 通用回答(流式))
+     *
+     * @param messages
+     * @param temperature
+     * @return
+     */
+    private Flowable<ModelData> doStreamRequest(List<ChatMessage> messages, Float temperature) {
+        ChatCompletionRequest chatCompletionRequest = ChatCompletionRequest.builder()
+                .model(Constants.ModelChatGLM4)
+                .stream(Boolean.TRUE)
+                .temperature(temperature)
+                .invokeMethod(Constants.invokeMethod)
+                .messages(messages)
+                .build();
+        try {
+            ModelApiResponse invokeModelApiResp = clientV4.invokeModelApi(chatCompletionRequest);
+            return invokeModelApiResp.getFlowable();
         }catch (Exception e){
             e.printStackTrace();
             throw new BusinessException(ErrorCode.SYSTEM_ERROR,e.getMessage());
