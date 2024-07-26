@@ -58,7 +58,23 @@ import { useRouter } from "vue-router";
 import { listQuestionVoByPageUsingPost } from "@/api/questionController";
 import message from "@arco-design/web-vue/es/message";
 import { getAppVoByIdUsingGet } from "@/api/appController";
-import { addUserAnswerUsingPost } from "@/api/userAnswerController";
+import {
+  addUserAnswerUsingPost,
+  generateAnswerIdUsingGet,
+} from "@/api/userAnswerController";
+
+const id = ref<number>();
+
+const generateId = async () => {
+  let res: any = await generateAnswerIdUsingGet();
+
+  if (res.data.code === 0) {
+    id.value = res.data.data as number;
+  } else {
+    message.error("获取唯一id失败" + res.data.msg);
+  }
+};
+watchEffect(() => generateId());
 
 interface Props {
   appId: string;
@@ -84,11 +100,11 @@ const currentQuestion = ref<API.QuestionContentDTO>({});
 const questionOptions = computed(() => {
   return currentQuestion.value?.options
     ? currentQuestion.value.options.map((option) => {
-      return {
-        label: `${option.key}. ${option.value}`,
-        value: option.key,
-      };
-    })
+        return {
+          label: `${option.key}. ${option.value}`,
+          value: option.key,
+        };
+      })
     : [];
 });
 // 当前答案
@@ -159,6 +175,7 @@ const doSubmit = async () => {
   const res = await addUserAnswerUsingPost({
     appId: props.appId as any,
     choices: answerList,
+    id: id.value,
   });
   if (res.data.code === 0 && res.data.data) {
     router.push(`/answer/result/${res.data.data}`);

@@ -3,7 +3,7 @@
     <a-layout style="height: 100vh">
       <a-layout-header class="header">
         <a-space>
-          <img class="logo" src="../assets/logo.png" />
+          <img class="logo" src="../assets/logo1.png" />
           <div>AI 答题应用平台</div>
         </a-space>
       </a-layout-header>
@@ -24,8 +24,6 @@
 <style scoped>
 #userLayout {
   text-align: center;
-  background: url("https://gw.alipayobjects.com/zos/rmsportal/FfdJeJRQWjEeGTpqgBKj.png")
-    0% 0% / 100% 100%;
 }
 
 #userLayout .logo {

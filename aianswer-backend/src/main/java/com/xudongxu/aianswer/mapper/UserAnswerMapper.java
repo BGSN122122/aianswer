@@ -1,7 +1,11 @@
 package com.xudongxu.aianswer.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.xudongxu.aianswer.model.dto.statistic.AppAnswerCountDTO;
+import com.xudongxu.aianswer.model.dto.statistic.AppAnswerResultCountDTO;
 import com.xudongxu.aianswer.model.entity.UserAnswer;
+
+import java.util.List;
 
 /**
  * @author 16871
@@ -11,6 +15,9 @@ import com.xudongxu.aianswer.model.entity.UserAnswer;
  */
 public interface UserAnswerMapper extends BaseMapper<UserAnswer> {
 
+    List<AppAnswerCountDTO> doAppAnswerCount();
+
+    List<AppAnswerResultCountDTO> doAppAnswerResultCount(Long appId);
 }
 
 

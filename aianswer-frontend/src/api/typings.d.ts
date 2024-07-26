@@ -5,6 +5,20 @@ declare namespace API {
     questionNumber?: number;
   };
 
+  type aiGenerateQuestionSseUsingGET1Params = {
+    appId?: number;
+    optionNumber?: number;
+    questionNumber?: number;
+  };
+
+  type aiGenerateQuestionSseUsingGETParams = {
+    appId?: number;
+    optionNumber?: number;
+    questionNumber?: number;
+    /** isVip */
+    isVip?: boolean;
+  };
+
   type App = {
     appDesc?: string;
     appIcon?: string;
@@ -28,6 +42,17 @@ declare namespace API {
     appName?: string;
     appType?: number;
     scoringStrategy?: number;
+  };
+
+  type AppAnswerCountDTO = {
+    answerCount?: number;
+    appId?: number;
+    appName?: string;
+  };
+
+  type AppAnswerResultCountDTO = {
+    resultCount?: string;
+    resultName?: string;
   };
 
   type AppEditRequest = {
@@ -55,6 +80,7 @@ declare namespace API {
     searchText?: string;
     sortField?: string;
     sortOrder?: string;
+    title?: string;
     userId?: number;
   };
 
@@ -103,6 +129,18 @@ declare namespace API {
   type BaseResponseInt_ = {
     code?: number;
     data?: number;
+    message?: string;
+  };
+
+  type BaseResponseListAppAnswerCountDTO_ = {
+    code?: number;
+    data?: AppAnswerCountDTO[];
+    message?: string;
+  };
+
+  type BaseResponseListAppAnswerResultCountDTO_ = {
+    code?: number;
+    data?: AppAnswerResultCountDTO[];
     message?: string;
   };
 
@@ -240,6 +278,11 @@ declare namespace API {
 
   type DeleteRequest = {
     id?: number;
+  };
+
+  type getAppAnswerResultCountUsingGETParams = {
+    /** appId */
+    appId?: number;
   };
 
   type getAppVOByIdUsingGETParams = {
@@ -557,6 +600,7 @@ declare namespace API {
   };
 
   type QuestionEditRequest = {
+    appId?: number;
     id?: number;
     questionContent?: QuestionContentDTO[];
   };
@@ -568,12 +612,14 @@ declare namespace API {
     notId?: number;
     pageSize?: number;
     questionContent?: string;
+    searchText?: string;
     sortField?: string;
     sortOrder?: string;
     userId?: number;
   };
 
   type QuestionUpdateRequest = {
+    appId?: number;
     id?: number;
     questionContent?: QuestionContentDTO[];
   };
@@ -666,6 +712,14 @@ declare namespace API {
     userId?: number;
   };
 
+  type SseEmitter = {
+    timeout?: number;
+  };
+
+  type uploadFileToOssUsingPOSTParams = {
+    biz?: string;
+  };
+
   type uploadFileUsingPOSTParams = {
     biz?: string;
   };
@@ -712,6 +766,7 @@ declare namespace API {
   type UserAnswerAddRequest = {
     appId?: number;
     choices?: string[];
+    id?: number;
   };
 
   type UserAnswerEditRequest = {

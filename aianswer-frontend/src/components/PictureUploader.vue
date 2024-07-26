@@ -49,7 +49,7 @@
 <script setup lang="ts">
 import { IconEdit, IconPlus } from "@arco-design/web-vue/es/icon";
 import { ref, withDefaults, defineProps } from "vue";
-import { uploadFileUsingPost } from "@/api/fileController";
+import { uploadFileToOssUsingPost } from "@/api/fileController";
 import { Message } from "@arco-design/web-vue";
 
 /**
@@ -81,7 +81,7 @@ if (props.value) {
 const customRequest = async (option: any) => {
   const { onError, onSuccess, fileItem } = option;
 
-  const res: any = await uploadFileUsingPost(
+  const res: any = await uploadFileToOssUsingPost(
     { biz: props.biz },
     {},
     fileItem.file

@@ -1,6 +1,6 @@
 <template>
   <div id="addAppPage">
-    <h2 style="margin-bottom: 32px">创建应用</h2>
+    <h2 style="margin-bottom: 32px">{{ route.name }}</h2>
     <a-form
       :model="form"
       :style="{ width: '480px' }"
@@ -8,26 +8,37 @@
       auto-label-width
       @submit="handleSubmit"
     >
-      <a-form-item field="appName" label="应用名称">
+      <a-form-item
+        field="appName"
+        label="应用名称"
+        :max-length="13"
+        allow-clear
+      >
         <a-input v-model="form.appName" placeholder="请输入应用名称" />
       </a-form-item>
       <a-form-item field="appDesc" label="应用描述">
-        <a-input v-model="form.appDesc" placeholder="请输入应用描述" />
+        <a-input
+          v-model="form.appDesc"
+          placeholder="请输入应用描述"
+          :max-length="17"
+          allow-clear
+        />
       </a-form-item>
-      <a-form-item field="appIcon" label="应用图标">
+      <!--      <a-form-item field="appIcon" label="应用图标">
         <a-input v-model="form.appIcon" placeholder="请输入应用图标" />
+      </a-form-item>-->
+      <a-form-item field="appIcon" label="应用图标">
+        <PictureUploader
+          :value="form.appIcon"
+          :onChange="(value: any) => (form.appIcon = value)"
+        />
       </a-form-item>
-      <!--      <a-form-item field="appIcon" label="应用图标">-->
-      <!--        <PictureUploader-->
-      <!--          :value="form.appIcon"-->
-      <!--          :onChange="(value) => (form.appIcon = value)"-->
-      <!--        />-->
-      <!--      </a-form-item>-->
       <a-form-item field="appType" label="应用类型">
         <a-select
           v-model="form.appType"
           :style="{ width: '320px' }"
           placeholder="请选择应用类型"
+          @change="handleChange"
         >
           <a-option
             v-for="(value, key) of APP_TYPE_MAP"
@@ -46,6 +57,7 @@
             v-for="(value, key) of APP_SCORING_STRATEGY_MAP"
             :value="Number(key)"
             :label="value"
+            :disabled="isDisabled(key)"
           />
         </a-select>
       </a-form-item>
@@ -59,16 +71,28 @@
 </template>
 
 <script setup lang="ts">
-import { defineProps, ref, watchEffect, withDefaults } from "vue";
+import { computed, defineProps, ref, watchEffect, withDefaults } from "vue";
 import API from "@/api";
 import message from "@arco-design/web-vue/es/message";
-import { useRouter } from "vue-router";
+import { useRouter, useRoute } from "vue-router";
 import {
   addAppUsingPost,
   editAppUsingPost,
   getAppVoByIdUsingGet,
 } from "@/api/appController";
 import { APP_SCORING_STRATEGY_MAP, APP_TYPE_MAP } from "@/constant/app";
+import PictureUploader from "@/components/PictureUploader.vue";
+
+const handleChange = () => {
+  if (form.value.appType === 0) {
+    form.value.scoringStrategy = 0;
+  }
+};
+const isDisabled = computed(() => (key: string) => {
+  if (form.value.appType === 0) {
+    return key === "1";
+  }
+});
 
 interface Props {
   id: string;
@@ -81,6 +105,7 @@ const props = withDefaults(defineProps<Props>(), {
 });
 
 const router = useRouter();
+const route = useRoute();
 
 const form = ref({
   appDesc: "",

@@ -29,4 +29,18 @@
         resultScore,userId,createTime,
         updateTime,isDelete
     </sql>
+    <select id="doAppAnswerCount" resultType="com.xudongxu.aianswer.model.dto.statistic.AppAnswerCountDTO">
+        select appId, appName, Count(appId) as answerCount
+        from user_answer ua
+                 inner join app a on a.id = ua.appId
+        group by ua.appId
+        order by answerCount
+    </select>
+    <select id="doAppAnswerResultCount"
+            resultType="com.xudongxu.aianswer.model.dto.statistic.AppAnswerResultCountDTO">
+        select resultName, count(id) resultCount
+        from user_answer where appId = #{appId}
+        group by resultName
+        order by resultCount
+    </select>
 </mapper>

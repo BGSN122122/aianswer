@@ -21,7 +21,7 @@
         <a-form-item field="questionNumber" label="题目数量">
           <a-input-number
             min="0"
-            max="20"
+            max="15"
             v-model="form.questionNumber"
             placeholder="请输入题目数量"
           />
@@ -29,7 +29,7 @@
         <a-form-item field="optionNumber" label="选项数量">
           <a-input-number
             min="0"
-            max="6"
+            max="4"
             v-model="form.optionNumber"
             placeholder="请输入选项数量"
           />
@@ -41,13 +41,16 @@
               type="primary"
               html-type="submit"
               style="width: 120px"
+              :disabled="sseSubmitting"
             >
               {{ submitting ? "生成中" : "一键生成" }}
             </a-button>
             <a-button
               :loading="sseSubmitting"
+              type="secondary"
               style="width: 120px"
               @click="handleSSESubmit"
+              :disabled="submitting"
             >
               {{ sseSubmitting ? "生成中" : "实时生成" }}
             </a-button>
@@ -80,12 +83,12 @@ const props = withDefaults(defineProps<Props>(), {
 
 const form = reactive({
   optionNumber: 2,
-  questionNumber: 10,
+  questionNumber: 8,
 } as API.AiGenerateQuestionRequest);
 
 const visible = ref(false);
 const submitting = ref(false);
-const sseSubmitting = ref(false);
+let sseSubmitting = ref(false);
 
 const handleClick = () => {
   visible.value = true;
@@ -130,7 +133,9 @@ const handleSSESubmit = async () => {
   if (!props.appId) {
     return;
   }
+  console.log(sseSubmitting.value);
   sseSubmitting.value = true;
+  console.log(sseSubmitting.value);
   // 创建 SSE 请求
   const eventSource = new EventSource(
     // todo 手动填写完整的后端地址

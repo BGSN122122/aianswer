@@ -12,7 +12,7 @@
           disabled
         >
           <div class="titleBar">
-            <img class="logo" src="../assets/logo.png" />
+            <img class="logo" src="../assets/logo1.png" />
             <div class="title">AI答题平台</div>
           </div>
         </a-menu-item>
@@ -21,9 +21,14 @@
         </a-menu-item>
       </a-menu>
     </a-col>
-    <a-col flex="100px">
+    <a-col flex="200px">
       <div v-if="loginUserStore.loginUser.id">
-        {{ loginUserStore.loginUser.userName ?? "无名" }}
+        <a-space>
+          {{ loginUserStore.loginUser.userName ?? "无名" }}
+          <a-button @click="logout" type="primary" style="margin-left: 15px"
+            >退出登录
+          </a-button>
+        </a-space>
       </div>
       <div v-else>
         <a-button type="primary" href="/user/login">登录</a-button>
@@ -38,6 +43,9 @@ import { useRouter } from "vue-router";
 import { computed, ref } from "vue";
 import { useLoginUserStore } from "@/store/userStore";
 import checkAccess from "@/access/checkAccess";
+import { userLogoutUsingPost } from "@/api/userController";
+import { getAppVoByIdUsingGet } from "@/api/appController";
+import message from "@arco-design/web-vue/es/message";
 
 const loginUserStore = useLoginUserStore();
 
@@ -58,6 +66,15 @@ const visibleRoutes = computed(() => {
     return true;
   });
 });
+const logout = async () => {
+  const res = await userLogoutUsingPost();
+  if (res.data.code === 0) {
+    loginUserStore.setLoginUser({});
+    await router.push("/user/login");
+  } else {
+    message.error("退出登录失败，" + res.data.message);
+  }
+};
 </script>
 
 <style>

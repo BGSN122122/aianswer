@@ -7,6 +7,7 @@
         button-text="搜索"
         size="large"
         search-button
+        @search="(value) => onsearch(value)"
       />
     </div>
     <a-list
@@ -76,6 +77,20 @@ const onPageChange = (page: number) => {
   };
 };
 
+const onsearch = async (value: string) => {
+  const params = {
+    reviewStatus: REVIEW_STATUS_ENUM.PASS,
+    ...searchParams.value,
+    appName: value,
+  };
+  const res = await listAppVoByPageUsingPost(params);
+  if (res.data.code === 0) {
+    dataList.value = res.data.data?.records || [];
+    total.value = res.data.data?.total || 0;
+  } else {
+    message.error("获取数据失败，" + res.data.message);
+  }
+};
 /**
  * 监听 searchParams 变量，改变时触发数据的重新加载
  */

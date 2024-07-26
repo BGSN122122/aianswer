@@ -7,6 +7,7 @@ import com.xudongxu.aianswer.common.ResultUtils;
 import com.xudongxu.aianswer.constant.FileConstant;
 import com.xudongxu.aianswer.exception.BusinessException;
 import com.xudongxu.aianswer.manager.CosManager;
+import com.xudongxu.aianswer.manager.OssManager;
 import com.xudongxu.aianswer.model.dto.file.UploadFileRequest;
 import com.xudongxu.aianswer.model.entity.User;
 import com.xudongxu.aianswer.model.enums.FileUploadBizEnum;
@@ -39,6 +40,11 @@ public class FileController {
 
     @Resource
     private CosManager cosManager;
+
+    @Resource
+    private OssManager ossManager;
+
+    final long MAX_FiLE_SIZE = 1024 * 1024L;
 
     /**
      * 文件上传
@@ -104,5 +110,22 @@ public class FileController {
                 throw new BusinessException(ErrorCode.PARAMS_ERROR, "文件类型错误");
             }
         }
+    }
+
+    /**
+     * 文件上传
+     *
+     * @param multipartFile
+     * @param uploadFileRequest
+     * @param request
+     * @return
+     */
+    @PostMapping("/upload/oss")
+    public BaseResponse<String> uploadFileToOss(@RequestPart("file") MultipartFile multipartFile,
+                                                UploadFileRequest uploadFileRequest, HttpServletRequest request) {
+        if (multipartFile.getSize() > MAX_FiLE_SIZE) {
+            throw new RuntimeException("文件大小不能超过1MB");
+        }
+        return ResultUtils.success(ossManager.uploadFile(multipartFile));
     }
 }
