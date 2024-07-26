@@ -54,7 +54,7 @@ const total = ref<number>(0);
  */
 const loadData = async () => {
   const params = {
-    reviewStatus: REVIEW_STATUS_ENUM.PASS,
+    // reviewStatus: REVIEW_STATUS_ENUM.PASS,
     ...searchParams.value,
   };
   const res = await listAppVoByPageUsingPost(params);
@@ -79,7 +79,7 @@ const onPageChange = (page: number) => {
 
 const onsearch = async (value: string) => {
   const params = {
-    reviewStatus: REVIEW_STATUS_ENUM.PASS,
+    // reviewStatus: REVIEW_STATUS_ENUM.PASS,
     ...searchParams.value,
     appName: value,
   };
