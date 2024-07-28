@@ -18,6 +18,7 @@ import DoAnswerPage from "@/views/answer/DoAnswerPage.vue";
 import AnswerResultPage from "@/views/answer/AnswerResultPage.vue";
 import MyAnswerPage from "@/views/answer/MyAnswerPage.vue";
 import AppStatisticPage from "@/views/statistic/AppStatisticPage.vue";
+import UserProfilePage from "@/views/user/UserProfilePage.vue";
 
 export const routes: Array<RouteRecordRaw> = [
   {
@@ -62,6 +63,15 @@ export const routes: Array<RouteRecordRaw> = [
     name: "应用详情页",
     props: true,
     component: AppDetailPage,
+    meta: {
+      hideInMenu: true,
+    },
+  },
+  {
+    path: "/profile",
+    name: "个人信息",
+    props: true,
+    component: UserProfilePage,
     meta: {
       hideInMenu: true,
     },

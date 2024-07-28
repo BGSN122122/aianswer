@@ -124,7 +124,7 @@ public class FileController {
     public BaseResponse<String> uploadFileToOss(@RequestPart("file") MultipartFile multipartFile,
                                                 UploadFileRequest uploadFileRequest, HttpServletRequest request) {
         if (multipartFile.getSize() > MAX_FiLE_SIZE) {
-            throw new RuntimeException("文件大小不能超过1MB");
+            throw new BusinessException(ErrorCode.PARAMS_ERROR, "文件大小不能超过 1M");
         }
         return ResultUtils.success(ossManager.uploadFile(multipartFile));
     }

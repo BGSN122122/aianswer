@@ -11,7 +11,7 @@
           :style="{ padding: 0, marginRight: '38px' }"
           disabled
         >
-          <div class="titleBar">
+          <div class="titleBar" @click="router.push('/')">
             <img class="logo" src="../assets/logo1.png" />
             <div class="title">AI答题平台</div>
           </div>
@@ -21,14 +21,16 @@
         </a-menu-item>
       </a-menu>
     </a-col>
-    <a-col flex="200px">
+    <a-col flex="150px">
       <div v-if="loginUserStore.loginUser.id">
-        <a-space>
+        <div style="cursor: pointer" @click="router.push('/profile')">
+          <a-avatar
+            :size="24"
+            :image-url="loginUserStore.loginUser.userAvatar"
+            style="margin-right: 1px"
+          />
           {{ loginUserStore.loginUser.userName ?? "无名" }}
-          <a-button @click="logout" type="primary" style="margin-left: 15px"
-            >退出登录
-          </a-button>
-        </a-space>
+        </div>
       </div>
       <div v-else>
         <a-button type="primary" href="/user/login">登录</a-button>
@@ -82,6 +84,7 @@ const logout = async () => {
   display: flex;
   align-items: center;
   padding: 10px;
+  cursor: pointer;
 }
 
 .logo {

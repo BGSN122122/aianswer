@@ -170,9 +170,7 @@ public class UserAnswerServiceImpl extends ServiceImpl<UserAnswerMapper, UserAns
             return userAnswerVOPage;
         }
         // 对象列表 => 封装对象列表
-        List<UserAnswerVO> userAnswerVOList = userAnswerList.stream().map(userAnswer -> {
-            return UserAnswerVO.objToVo(userAnswer);
-        }).collect(Collectors.toList());
+        List<UserAnswerVO> userAnswerVOList = userAnswerList.stream().map(UserAnswerVO::objToVo).collect(Collectors.toList());
 
         // 可以根据需要为封装对象补充值，不需要的内容可以删除
         // region 可选
