@@ -27,6 +27,9 @@ import com.xudongxu.aianswer.service.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.dao.DuplicateKeyException;
+import org.springframework.retry.annotation.Backoff;
+import org.springframework.retry.annotation.Recover;
+import org.springframework.retry.annotation.Retryable;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -66,6 +69,7 @@ public class UserAnswerController {
      * @return
      */
     @PostMapping("/add")
+    @Retryable(value = BusinessException.class, backoff = @Backoff(delay = 100))
     public BaseResponse<Long> addUserAnswer(@RequestBody UserAnswerAddRequest userAnswerAddRequest, HttpServletRequest request) {
         ThrowUtils.throwIf(userAnswerAddRequest == null, ErrorCode.PARAMS_ERROR);
         // 在此处将实体类和 DTO 进行转换
@@ -89,7 +93,7 @@ public class UserAnswerController {
         try {
             boolean result = userAnswerService.save(userAnswer);
             ThrowUtils.throwIf(!result, ErrorCode.OPERATION_ERROR);
-        }catch (DuplicateKeyException e){
+        } catch (DuplicateKeyException e) {
             // ignore
         }
         // 返回新写入的数据 id
@@ -103,9 +107,14 @@ public class UserAnswerController {
             userAnswerService.updateById(userAnswerWithResult);
         } catch (Exception e) {
             e.printStackTrace();
-            throw new BusinessException(ErrorCode.OPERATION_ERROR, "评分错误");
+            throw new BusinessException(ErrorCode.OPERATION_ERROR, "AI评分错误");
         }
         return ResultUtils.success(newUserAnswerId);
+    }
+
+    @Recover
+    public UserAnswer doScoreRecover(BusinessException e) {
+        throw new BusinessException(ErrorCode.OPERATION_ERROR, "AI评分重试失败");
     }
 
     /**
@@ -278,7 +287,7 @@ public class UserAnswerController {
     // endregion
 
     @GetMapping("/generate/id")
-    public BaseResponse<Long> generateAnswerId(){
+    public BaseResponse<Long> generateAnswerId() {
         return ResultUtils.success(IdUtil.getSnowflakeNextId());
     }
 }

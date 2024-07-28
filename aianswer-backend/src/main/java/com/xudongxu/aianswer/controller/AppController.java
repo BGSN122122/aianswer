@@ -62,6 +62,7 @@ public class AppController {
         app.setReviewStatus(ReviewStatusEnum.REVIEWING.getValue());
         app.setUserId(loginUser.getId());
         // 写入数据库
+        app.setReviewStatus(1);
         boolean result = appService.save(app);
         ThrowUtils.throwIf(!result, ErrorCode.OPERATION_ERROR);
         // 返回新写入的数据 id
