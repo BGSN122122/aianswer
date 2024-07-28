@@ -130,6 +130,7 @@ const loadData = async () => {
   if (res.data.code === 0 && res.data.data) {
     oldApp.value = res.data.data;
     form.value = res.data.data;
+    console.log(form.value.appIcon);
   } else {
     message.error("获取数据失败，" + res.data.message);
   }

@@ -40,6 +40,12 @@
     </a-form-item>
   </a-form>
   <a-table
+    size="large"
+    style="
+      display: flex;
+      justify-content: center; /* 水平居中 */
+      height: 100vh; /* 占满整个视口高度 */
+    "
     :columns="columns"
     :data="dataList"
     :pagination="{
@@ -50,9 +56,6 @@
     }"
     @page-change="onPageChange"
   >
-    <template #resultPicture="{ record }">
-      <a-image width="64" :src="record.resultPicture" />
-    </template>
     <template #createTime="{ record }">
       {{ dayjs(record.createTime).format("YYYY-MM-DD HH:mm:ss") }}
     </template>
@@ -156,49 +159,74 @@ const columns = [
   {
     title: "id",
     dataIndex: "id",
+    ellipsis: true,
+    tooltip: true,
+    width: 100,
   },
   {
     title: "名称",
     dataIndex: "resultName",
+    ellipsis: true,
+    tooltip: true,
+    width: 100,
   },
   {
     title: "描述",
     dataIndex: "resultDesc",
-  },
-  {
-    title: "图片",
-    dataIndex: "resultPicture",
-    slotName: "resultPicture",
+    ellipsis: true,
+    tooltip: true,
+    width: 100,
   },
   {
     title: "结果属性",
     dataIndex: "resultProp",
+    ellipsis: true,
+    tooltip: true,
+    width: 100,
   },
   {
     title: "评分范围",
     dataIndex: "resultScoreRange",
+    ellipsis: true,
+    tooltip: true,
+    width: 100,
   },
   {
     title: "应用 id",
     dataIndex: "appId",
+    ellipsis: true,
+    tooltip: true,
+    width: 100,
   },
   {
     title: "用户 id",
     dataIndex: "userId",
+    ellipsis: true,
+    tooltip: true,
+    width: 100,
   },
   {
     title: "创建时间",
     dataIndex: "createTime",
     slotName: "createTime",
+    ellipsis: true,
+    tooltip: true,
+    width: 100,
   },
   {
     title: "更新时间",
     dataIndex: "updateTime",
     slotName: "updateTime",
+    ellipsis: true,
+    tooltip: true,
+    width: 100,
   },
   {
     title: "操作",
     slotName: "optional",
+    ellipsis: true,
+    tooltip: true,
+    width: 100,
   },
 ];
 </script>

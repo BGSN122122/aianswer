@@ -19,13 +19,16 @@
         allow-clear
       />
     </a-form-item>
-    <a-form-item>
-      <a-button type="primary" html-type="submit" style="width: 100px">
-        搜索
-      </a-button>
-    </a-form-item>
+
+    <a-button type="primary" html-type="submit"> 搜索 </a-button>
   </a-form>
   <a-table
+    size="large"
+    style="
+      display: flex;
+      justify-content: center; /* 水平居中 */
+      height: 100vh; /* 占满整个视口高度 */
+    "
     :columns="columns"
     :data="dataList"
     :pagination="{
@@ -205,65 +208,107 @@ const columns = [
   {
     title: "id",
     dataIndex: "id",
+    ellipsis: true,
+    tooltip: true,
+    width: 100,
   },
   {
     title: "名称",
     dataIndex: "appName",
+    ellipsis: true,
+    tooltip: true,
+    width: 100,
   },
   {
     title: "描述",
     dataIndex: "appDesc",
+    ellipsis: true,
+    tooltip: true,
+    width: 100,
   },
   {
     title: "图标",
     dataIndex: "appIcon",
     slotName: "appIcon",
+    ellipsis: true,
+    tooltip: true,
+    width: 100,
   },
   {
     title: "应用类型",
     dataIndex: "appType",
     slotName: "appType",
+    ellipsis: true,
+    tooltip: true,
+    width: 100,
   },
   {
     title: "评分策略",
     dataIndex: "scoringStrategy",
     slotName: "scoringStrategy",
+    ellipsis: true,
+    tooltip: true,
+    width: 100,
   },
   {
     title: "审核状态",
     dataIndex: "reviewStatus",
     slotName: "reviewStatus",
+    ellipsis: true,
+    tooltip: true,
+    width: 100,
   },
   {
     title: "审核信息",
     dataIndex: "reviewMessage",
+    ellipsis: true,
+    tooltip: true,
+    width: 100,
   },
   {
     title: "审核时间",
     dataIndex: "reviewTime",
     slotName: "reviewTime",
+    ellipsis: true,
+    tooltip: true,
+    width: 100,
   },
   {
     title: "审核人 id",
     dataIndex: "reviewerId",
+    ellipsis: true,
+    tooltip: true,
+    width: 100,
   },
   {
     title: "用户 id",
     dataIndex: "userId",
+    ellipsis: true,
+    tooltip: true,
+    width: 100,
   },
   {
     title: "创建时间",
     dataIndex: "createTime",
     slotName: "createTime",
+    ellipsis: true,
+    tooltip: true,
+    width: 100,
   },
   {
     title: "更新时间",
     dataIndex: "updateTime",
     slotName: "updateTime",
+    ellipsis: true,
+    tooltip: true,
+    width: 100,
   },
   {
     title: "操作",
     slotName: "optional",
+    ellipsis: true,
+    tooltip: true,
+    width: 230,
   },
 ];
 </script>

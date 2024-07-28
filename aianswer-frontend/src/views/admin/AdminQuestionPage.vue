@@ -19,13 +19,16 @@
         allow-clear
       />
     </a-form-item>
-    <a-form-item>
-      <a-button type="primary" html-type="submit" style="width: 100px">
-        搜索
-      </a-button>
-    </a-form-item>
+
+    <a-button type="primary" html-type="submit"> 搜索 </a-button>
   </a-form>
   <a-table
+    size="large"
+    style="
+      display: flex;
+      justify-content: center; /* 水平居中 */
+      height: 100vh; /* 占满整个视口高度 */
+    "
     :columns="columns"
     :data="dataList"
     :pagination="{
@@ -36,14 +39,14 @@
     }"
     @page-change="onPageChange"
   >
-    <template #questionContent="{ record }">
-      <div
-        v-for="question in JSON.parse(record.questionContent)"
-        :key="question.title"
-      >
-        {{ question }}
-      </div>
-    </template>
+    <!--    <template #questionContent="{ record }">
+          <div
+            v-for="question in JSON.parse(record.questionContent)"
+            :key="question.title"
+          >
+            {{ question }}
+          </div>
+        </template>-->
     <template #createTime="{ record }">
       {{ dayjs(record.createTime).format("YYYY-MM-DD HH:mm:ss") }}
     </template>
@@ -147,33 +150,54 @@ const columns = [
   {
     title: "id",
     dataIndex: "id",
+    ellipsis: true,
+    tooltip: true,
+    width: 100,
   },
   {
     title: "题目内容",
     dataIndex: "questionContent",
-    slotName: "questionContent",
+    // slotName: "questionContent",
+    ellipsis: true,
+    tooltip: true,
+    width: 300,
   },
   {
     title: "应用 id",
     dataIndex: "appId",
+    ellipsis: true,
+    tooltip: true,
+    width: 100,
   },
   {
     title: "用户 id",
     dataIndex: "userId",
+    ellipsis: true,
+    tooltip: true,
+    width: 100,
   },
   {
     title: "创建时间",
     dataIndex: "createTime",
     slotName: "createTime",
+    ellipsis: true,
+    tooltip: true,
+    width: 100,
   },
   {
     title: "更新时间",
     dataIndex: "updateTime",
     slotName: "updateTime",
+    ellipsis: true,
+    tooltip: true,
+    width: 100,
   },
   {
     title: "操作",
     slotName: "optional",
+    ellipsis: true,
+    tooltip: true,
+    width: 100,
   },
 ];
 </script>

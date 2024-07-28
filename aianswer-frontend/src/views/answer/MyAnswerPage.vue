@@ -26,13 +26,16 @@
         allow-clear
       />
     </a-form-item>
-    <a-form-item>
-      <a-button type="primary" html-type="submit" style="width: 100px">
-        搜索
-      </a-button>
-    </a-form-item>
+
+    <a-button type="primary" html-type="submit"> 搜索 </a-button>
   </a-form>
   <a-table
+    size="large"
+    style="
+      display: flex;
+      justify-content: center; /* 水平居中 */
+      height: 100vh; /* 占满整个视口高度 */
+    "
     :columns="columns"
     :data="dataList"
     :pagination="{
@@ -43,9 +46,6 @@
     }"
     @page-change="onPageChange"
   >
-    <template #resultPicture="{ record }">
-      <a-image width="64" :src="record.resultPicture" />
-    </template>
     <template #appType="{ record }">
       {{ APP_TYPE_MAP[record.appType] }}
     </template>
@@ -156,54 +156,82 @@ const columns = [
   {
     title: "id",
     dataIndex: "id",
+    ellipsis: true,
+    tooltip: true,
+    width: 100,
   },
   {
     title: "选项",
     dataIndex: "choices",
+    ellipsis: true,
+    tooltip: true,
+    width: 100,
   },
   {
     title: "结果 id",
     dataIndex: "resultId",
+    ellipsis: true,
+    tooltip: true,
+    width: 100,
   },
   {
     title: "名称",
     dataIndex: "resultName",
+    ellipsis: true,
+    tooltip: true,
+    width: 100,
   },
   {
     title: "描述",
     dataIndex: "resultDesc",
-  },
-  {
-    title: "图片",
-    dataIndex: "resultPicture",
-    slotName: "resultPicture",
+    ellipsis: true,
+    tooltip: true,
+    width: 200,
   },
   {
     title: "得分",
     dataIndex: "resultScore",
+    ellipsis: true,
+    tooltip: true,
+    width: 100,
   },
   {
     title: "应用 id",
     dataIndex: "appId",
+    ellipsis: true,
+    tooltip: true,
+    width: 100,
   },
   {
     title: "应用类型",
     dataIndex: "appType",
     slotName: "appType",
+    ellipsis: true,
+    tooltip: true,
+    width: 100,
   },
   {
     title: "评分策略",
     dataIndex: "scoringStrategy",
     slotName: "scoringStrategy",
+    ellipsis: true,
+    tooltip: true,
+    width: 100,
   },
   {
     title: "创建时间",
     dataIndex: "createTime",
     slotName: "createTime",
+    ellipsis: true,
+    tooltip: true,
+    width: 100,
   },
   {
     title: "操作",
     slotName: "optional",
+    ellipsis: true,
+    tooltip: true,
+    width: 100,
   },
 ];
 </script>
