@@ -30,12 +30,12 @@
 </template>
 
 <script setup lang="ts">
-import { ref, watchEffect } from "vue";
+import {ref, watchEffect} from "vue";
 import AppCard from "@/components/AppCard.vue";
 import API from "@/api";
-import { listAppVoByPageUsingPost } from "@/api/appController";
+import {listAppVoByPageUsingPost} from "@/api/appController";
 import message from "@arco-design/web-vue/es/message";
-import { REVIEW_STATUS_ENUM } from "@/constant/app";
+import {REVIEW_STATUS_ENUM} from "@/constant/app";
 
 // 初始化搜索条件（不应该被修改）
 const initSearchParams = {
@@ -81,7 +81,7 @@ const onsearch = async (value: string) => {
   const params = {
     // reviewStatus: REVIEW_STATUS_ENUM.PASS,
     ...searchParams.value,
-    appName: value,
+    searchText: value,
   };
   const res = await listAppVoByPageUsingPost(params);
   if (res.data.code === 0) {

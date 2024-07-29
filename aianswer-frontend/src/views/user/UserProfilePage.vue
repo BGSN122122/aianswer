@@ -82,8 +82,9 @@ const form = ref({
 const handleSubmit = async () => {
   const res = await updateMyUserUsingPost(form.value);
   if (res.data.code === 0) {
-    message.success("用户信息修改成功");
     loginUserStore.setLoginUser(form.value);
+    await loginUserStore.fetchLoginUser();
+    message.success("用户信息修改成功");
   } else {
     message.error("操作失败，" + res.data.message);
   }
