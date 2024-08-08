@@ -111,8 +111,8 @@ const form = ref({
   appDesc: "",
   appIcon: "",
   appName: "",
-  appType: 0,
-  scoringStrategy: 0,
+  appType: 1,
+  scoringStrategy: 1,
 } as API.AppAddRequest);
 
 const oldApp = ref<API.AppVO>();

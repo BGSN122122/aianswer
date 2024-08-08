@@ -10,6 +10,21 @@
       <a-layout-footer class="footer">
         <div class="footer-content">
           <p>&copy; 2024 My Website. All rights reserved.</p>
+          <space>
+            <a
+              href="https://gitee.com/xu-dongxu122122/aianswer"
+              target="_blank"
+              style="margin-right: 5px"
+              >Gitee</a
+            >
+            <span>|</span>
+            <a
+              href="https://github.com/BGSN122122/aianswer"
+              target="_blank"
+              style="margin-left: 5px"
+              >Github</a
+            ></space
+          >
         </div>
       </a-layout-footer>
     </a-layout>
